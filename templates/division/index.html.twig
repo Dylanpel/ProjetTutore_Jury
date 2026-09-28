@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Division index{% endblock %}
+
+{% block body %}
+    <h1>Division index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Num</th>
+                <th>Nom</th>
+                <th>MoyenneValidation</th>
+                <th>MoyenneMinimal</th>
+                <th>Remarque</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for division in divisions %}
+            <tr>
+                <td>{{ division.id }}</td>
+                <td>{{ division.num }}</td>
+                <td>{{ division.nom }}</td>
+                <td>{{ division.moyenneValidation }}</td>
+                <td>{{ division.moyenneMinimal }}</td>
+                <td>{{ division.remarque }}</td>
+                <td>
+                    <a href="{{ path('app_division_show', {'id': division.id}) }}">show</a>
+                    <a href="{{ path('app_division_edit', {'id': division.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_division_new') }}">Create new</a>
+{% endblock %}

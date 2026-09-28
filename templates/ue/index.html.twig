@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ue index{% endblock %}
+
+{% block body %}
+    <h1>Ue index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Nom_court</th>
+                <th>Ects</th>
+                <th>Moyenne_validation</th>
+                <th>Moyenne_minimale</th>
+                <th>Code_apogee</th>
+                <th>Code_ose</th>
+                <th>Remarque</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ue in ues %}
+            <tr>
+                <td>{{ ue.id }}</td>
+                <td>{{ ue.nom }}</td>
+                <td>{{ ue.nomCourt }}</td>
+                <td>{{ ue.ects }}</td>
+                <td>{{ ue.moyenneValidation }}</td>
+                <td>{{ ue.moyenneMinimale }}</td>
+                <td>{{ ue.codeApogee }}</td>
+                <td>{{ ue.codeOse }}</td>
+                <td>{{ ue.remarque }}</td>
+                <td>
+                    <a href="{{ path('app_ue_show', {'id': ue.id}) }}">show</a>
+                    <a href="{{ path('app_ue_edit', {'id': ue.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_ue_new') }}">Create new</a>
+{% endblock %}

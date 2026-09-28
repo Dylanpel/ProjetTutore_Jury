@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Config index{% endblock %}
+
+{% block body %}
+    <h1>Config index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Annee</th>
+                <th>Responsable</th>
+                <th>Webmaster</th>
+                <th>Is_actif</th>
+                <th>Remarque</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for config in configs %}
+            <tr>
+                <td>{{ config.id }}</td>
+                <td>{{ config.annee }}</td>
+                <td>{{ config.responsable }}</td>
+                <td>{{ config.webmaster }}</td>
+                <td>{{ config.isActif ? 'Yes' : 'No' }}</td>
+                <td>{{ config.remarque }}</td>
+                <td>
+                    <a href="{{ path('app_config_show', {'id': config.id}) }}">show</a>
+                    <a href="{{ path('app_config_edit', {'id': config.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_config_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Calcul index{% endblock %}
+
+{% block body %}
+    <h1>Calcul index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Formule</th>
+                <th>Remarque</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for calcul in calculs %}
+            <tr>
+                <td>{{ calcul.id }}</td>
+                <td>{{ calcul.formule }}</td>
+                <td>{{ calcul.remarque }}</td>
+                <td>
+                    <a href="{{ path('app_calcul_show', {'id': calcul.id}) }}">show</a>
+                    <a href="{{ path('app_calcul_edit', {'id': calcul.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_calcul_new') }}">Create new</a>
+{% endblock %}

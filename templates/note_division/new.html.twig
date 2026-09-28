@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New NoteDivision{% endblock %}
+
+{% block body %}
+    <h1>Create new NoteDivision</h1>
+
+    {{ include('note_division/_form.html.twig') }}
+
+    <a href="{{ path('app_note_division_index') }}">back to list</a>
+{% endblock %}

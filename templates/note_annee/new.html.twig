@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New NoteAnnee{% endblock %}
+
+{% block body %}
+    <h1>Create new NoteAnnee</h1>
+
+    {{ include('note_annee/_form.html.twig') }}
+
+    <a href="{{ path('app_note_annee_index') }}">back to list</a>
+{% endblock %}
