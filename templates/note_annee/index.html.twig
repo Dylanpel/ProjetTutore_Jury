@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NoteAnnee index{% endblock %}
+
+{% block body %}
+    <h1>NoteAnnee index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Note</th>
+                <th>NeutralisNoteMini</th>
+                <th>PointsJury</th>
+                <th>Bonus</th>
+                <th>Remarque</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for note_annee in note_annees %}
+            <tr>
+                <td>{{ note_annee.id }}</td>
+                <td>{{ note_annee.note }}</td>
+                <td>{{ note_annee.neutralisNoteMini ? 'Yes' : 'No' }}</td>
+                <td>{{ note_annee.pointsJury }}</td>
+                <td>{{ note_annee.bonus }}</td>
+                <td>{{ note_annee.remarque }}</td>
+                <td>
+                    <a href="{{ path('app_note_annee_show', {'id': note_annee.id}) }}">show</a>
+                    <a href="{{ path('app_note_annee_edit', {'id': note_annee.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_note_annee_new') }}">Create new</a>
+{% endblock %}

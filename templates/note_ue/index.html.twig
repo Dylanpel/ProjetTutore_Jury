@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NoteUe index{% endblock %}
+
+{% block body %}
+    <h1>NoteUe index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Note</th>
+                <th>NeutralisNoteMini</th>
+                <th>PointsJury</th>
+                <th>IsDispense</th>
+                <th>Remarque</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for note_ue in note_ues %}
+            <tr>
+                <td>{{ note_ue.id }}</td>
+                <td>{{ note_ue.note }}</td>
+                <td>{{ note_ue.neutralisNoteMini ? 'Yes' : 'No' }}</td>
+                <td>{{ note_ue.pointsJury }}</td>
+                <td>{{ note_ue.isDispense ? 'Yes' : 'No' }}</td>
+                <td>{{ note_ue.remarque }}</td>
+                <td>
+                    <a href="{{ path('app_note_ue_show', {'id': note_ue.id}) }}">show</a>
+                    <a href="{{ path('app_note_ue_edit', {'id': note_ue.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_note_ue_new') }}">Create new</a>
+{% endblock %}

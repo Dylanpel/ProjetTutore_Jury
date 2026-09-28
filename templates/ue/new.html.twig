@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Ue{% endblock %}
+
+{% block body %}
+    <h1>Create new Ue</h1>
+
+    {{ include('ue/_form.html.twig') }}
+
+    <a href="{{ path('app_ue_index') }}">back to list</a>
+{% endblock %}

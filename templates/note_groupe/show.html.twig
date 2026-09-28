@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NoteGroupe{% endblock %}
+
+{% block body %}
+    <h1>NoteGroupe</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ note_groupe.id }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ note_groupe.note }}</td>
+            </tr>
+            <tr>
+                <th>NeutralisNoteMini</th>
+                <td>{{ note_groupe.neutralisNoteMini ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>PointsJury</th>
+                <td>{{ note_groupe.pointsJury }}</td>
+            </tr>
+            <tr>
+                <th>IsDispense</th>
+                <td>{{ note_groupe.isDispense ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Remarque</th>
+                <td>{{ note_groupe.remarque }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_note_groupe_index') }}">back to list</a>
+
+    <a href="{{ path('app_note_groupe_edit', {'id': note_groupe.id}) }}">edit</a>
+
+    {{ include('note_groupe/_delete_form.html.twig') }}
+{% endblock %}

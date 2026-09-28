@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NoteEpreuve{% endblock %}
+
+{% block body %}
+    <h1>NoteEpreuve</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ note_epreuve.id }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ note_epreuve.note }}</td>
+            </tr>
+            <tr>
+                <th>NeutraliseNoteMini</th>
+                <td>{{ note_epreuve.neutraliseNoteMini ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>PointsJury</th>
+                <td>{{ note_epreuve.pointsJury }}</td>
+            </tr>
+            <tr>
+                <th>IsDispense</th>
+                <td>{{ note_epreuve.isDispense ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Absence</th>
+                <td>{{ note_epreuve.absence }}</td>
+            </tr>
+            <tr>
+                <th>Remarque</th>
+                <td>{{ note_epreuve.remarque }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_note_epreuve_index') }}">back to list</a>
+
+    <a href="{{ path('app_note_epreuve_edit', {'id': note_epreuve.id}) }}">edit</a>
+
+    {{ include('note_epreuve/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New NoteUe{% endblock %}
+
+{% block body %}
+    <h1>Create new NoteUe</h1>
+
+    {{ include('note_ue/_form.html.twig') }}
+
+    <a href="{{ path('app_note_ue_index') }}">back to list</a>
+{% endblock %}

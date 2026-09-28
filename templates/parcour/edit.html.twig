@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Parcour{% endblock %}
+
+{% block body %}
+    <h1>Edit Parcour</h1>
+
+    {{ include('parcour/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_parcour_index') }}">back to list</a>
+
+    {{ include('parcour/_delete_form.html.twig') }}
+{% endblock %}
