@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Parcour{% endblock %}
+
+{% block body %}
+    <h1>Create new Parcour</h1>
+
+    {{ include('parcour/_form.html.twig') }}
+
+    <a href="{{ path('app_parcour_index') }}">back to list</a>
+{% endblock %}

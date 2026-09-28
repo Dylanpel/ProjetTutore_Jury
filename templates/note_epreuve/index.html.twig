@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NoteEpreuve index{% endblock %}
+
+{% block body %}
+    <h1>NoteEpreuve index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Note</th>
+                <th>NeutraliseNoteMini</th>
+                <th>PointsJury</th>
+                <th>IsDispense</th>
+                <th>Absence</th>
+                <th>Remarque</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for note_epreuve in note_epreuves %}
+            <tr>
+                <td>{{ note_epreuve.id }}</td>
+                <td>{{ note_epreuve.note }}</td>
+                <td>{{ note_epreuve.neutraliseNoteMini ? 'Yes' : 'No' }}</td>
+                <td>{{ note_epreuve.pointsJury }}</td>
+                <td>{{ note_epreuve.isDispense ? 'Yes' : 'No' }}</td>
+                <td>{{ note_epreuve.absence }}</td>
+                <td>{{ note_epreuve.remarque }}</td>
+                <td>
+                    <a href="{{ path('app_note_epreuve_show', {'id': note_epreuve.id}) }}">show</a>
+                    <a href="{{ path('app_note_epreuve_edit', {'id': note_epreuve.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_note_epreuve_new') }}">Create new</a>
+{% endblock %}

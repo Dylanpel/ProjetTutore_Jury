@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NoteDivision index{% endblock %}
+
+{% block body %}
+    <h1>NoteDivision index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Note</th>
+                <th>NeutraliseNoteMini</th>
+                <th>PointsJury</th>
+                <th>IsDispense</th>
+                <th>Remarque</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for note_division in note_divisions %}
+            <tr>
+                <td>{{ note_division.id }}</td>
+                <td>{{ note_division.note }}</td>
+                <td>{{ note_division.neutraliseNoteMini ? 'Yes' : 'No' }}</td>
+                <td>{{ note_division.pointsJury }}</td>
+                <td>{{ note_division.isDispense ? 'Yes' : 'No' }}</td>
+                <td>{{ note_division.remarque }}</td>
+                <td>
+                    <a href="{{ path('app_note_division_show', {'id': note_division.id}) }}">show</a>
+                    <a href="{{ path('app_note_division_edit', {'id': note_division.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_note_division_new') }}">Create new</a>
+{% endblock %}

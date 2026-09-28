@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Parcour{% endblock %}
+
+{% block body %}
+    <h1>Parcour</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ parcour.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ parcour.nom }}</td>
+            </tr>
+            <tr>
+                <th>NomCourt</th>
+                <td>{{ parcour.nomCourt }}</td>
+            </tr>
+            <tr>
+                <th>Rang</th>
+                <td>{{ parcour.rang }}</td>
+            </tr>
+            <tr>
+                <th>Remarque</th>
+                <td>{{ parcour.remarque }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_parcour_index') }}">back to list</a>
+
+    <a href="{{ path('app_parcour_edit', {'id': parcour.id}) }}">edit</a>
+
+    {{ include('parcour/_delete_form.html.twig') }}
+{% endblock %}

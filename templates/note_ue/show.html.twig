@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NoteUe{% endblock %}
+
+{% block body %}
+    <h1>NoteUe</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ note_ue.id }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ note_ue.note }}</td>
+            </tr>
+            <tr>
+                <th>NeutralisNoteMini</th>
+                <td>{{ note_ue.neutralisNoteMini ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>PointsJury</th>
+                <td>{{ note_ue.pointsJury }}</td>
+            </tr>
+            <tr>
+                <th>IsDispense</th>
+                <td>{{ note_ue.isDispense ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Remarque</th>
+                <td>{{ note_ue.remarque }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_note_ue_index') }}">back to list</a>
+
+    <a href="{{ path('app_note_ue_edit', {'id': note_ue.id}) }}">edit</a>
+
+    {{ include('note_ue/_delete_form.html.twig') }}
+{% endblock %}

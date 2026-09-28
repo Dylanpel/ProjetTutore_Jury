@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AnneeUser{% endblock %}
+
+{% block body %}
+    <h1>AnneeUser</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ annee_user.id }}</td>
+            </tr>
+            <tr>
+                <th>Droit</th>
+                <td>{{ annee_user.droit }}</td>
+            </tr>
+            <tr>
+                <th>Remarque</th>
+                <td>{{ annee_user.remarque }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_annee_user_index') }}">back to list</a>
+
+    <a href="{{ path('app_annee_user_edit', {'id': annee_user.id}) }}">edit</a>
+
+    {{ include('annee_user/_delete_form.html.twig') }}
+{% endblock %}
