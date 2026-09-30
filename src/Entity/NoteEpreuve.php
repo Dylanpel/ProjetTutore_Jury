@@ -40,7 +40,7 @@ class NoteEpreuve
 
     #[ORM\ManyToOne(inversedBy: 'noteEpreuves')]
     #[ORM\JoinColumn(name: 'id_epreuve', nullable: false)]
-    private ?Epreuve $eprueve = null;
+    private ?Epreuve $epreuve = null;
 
     public function getId(): ?int
     {
@@ -130,14 +130,14 @@ class NoteEpreuve
         return $this;
     }
 
-    public function getEprueve(): ?Epreuve
+    public function getEpreuve(): ?Epreuve
     {
-        return $this->eprueve;
+        return $this->epreuve;
     }
 
-    public function setEprueve(?Epreuve $eprueve): static
+    public function setEpreuve(?Epreuve $epreuve): static
     {
-        $this->eprueve = $eprueve;
+        $this->epreuve = $epreuve;
 
         return $this;
     }
