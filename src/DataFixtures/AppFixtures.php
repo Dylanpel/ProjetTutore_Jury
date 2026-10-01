@@ -287,7 +287,7 @@ class AppFixtures extends Fixture
 
         $noteEpreuveAliceCC = new NoteEpreuve();
         $noteEpreuveAliceCC->setEtudiant($alice);
-        $noteEpreuveAliceCC->setEprueve($epreuveAlgoCC);
+        $noteEpreuveAliceCC->setEpreuve($epreuveAlgoCC);
         $noteEpreuveAliceCC->setNote(14.0);
         $noteEpreuveAliceCC->setNeutraliseNoteMini(false);
         $noteEpreuveAliceCC->setIsDispense(false);
@@ -296,7 +296,7 @@ class AppFixtures extends Fixture
 
         $noteEpreuveAliceExamen = new NoteEpreuve();
         $noteEpreuveAliceExamen->setEtudiant($alice);
-        $noteEpreuveAliceExamen->setEprueve($epreuveAlgoExamen);
+        $noteEpreuveAliceExamen->setEpreuve($epreuveAlgoExamen);
         $noteEpreuveAliceExamen->setNote(12.0);
         $noteEpreuveAliceExamen->setNeutraliseNoteMini(false);
         $noteEpreuveAliceExamen->setIsDispense(false);
@@ -305,7 +305,7 @@ class AppFixtures extends Fixture
 
         $noteEpreuveAliceOral = new NoteEpreuve();
         $noteEpreuveAliceOral->setEtudiant($alice);
-        $noteEpreuveAliceOral->setEprueve($epreuveAnglaisOral);
+        $noteEpreuveAliceOral->setEpreuve($epreuveAnglaisOral);
         $noteEpreuveAliceOral->setNote(16.0);
         $noteEpreuveAliceOral->setNeutraliseNoteMini(false);
         $noteEpreuveAliceOral->setIsDispense(false);
@@ -319,7 +319,7 @@ class AppFixtures extends Fixture
 
         $noteEpreuveBobCC = new NoteEpreuve();
         $noteEpreuveBobCC->setEtudiant($bob);
-        $noteEpreuveBobCC->setEprueve($epreuveAlgoCC);
+        $noteEpreuveBobCC->setEpreuve($epreuveAlgoCC);
         $noteEpreuveBobCC->setNote(9.0);
         $noteEpreuveBobCC->setNeutraliseNoteMini(false);
         $noteEpreuveBobCC->setIsDispense(false);
@@ -328,7 +328,7 @@ class AppFixtures extends Fixture
 
         $noteEpreuveBobExamen = new NoteEpreuve();
         $noteEpreuveBobExamen->setEtudiant($bob);
-        $noteEpreuveBobExamen->setEprueve($epreuveAlgoExamen);
+        $noteEpreuveBobExamen->setEpreuve($epreuveAlgoExamen);
         $noteEpreuveBobExamen->setAbsence(StatutAbsence::INJUSTIFIEE);
         $noteEpreuveBobExamen->setNeutraliseNoteMini(false);
         $noteEpreuveBobExamen->setIsDispense(false);
@@ -338,7 +338,7 @@ class AppFixtures extends Fixture
 
         $noteEpreuveBobOral = new NoteEpreuve();
         $noteEpreuveBobOral->setEtudiant($bob);
-        $noteEpreuveBobOral->setEprueve($epreuveAnglaisOral);
+        $noteEpreuveBobOral->setEpreuve($epreuveAnglaisOral);
         $noteEpreuveBobOral->setNote(11.0);
         $noteEpreuveBobOral->setNeutraliseNoteMini(false);
         $noteEpreuveBobOral->setIsDispense(false);
