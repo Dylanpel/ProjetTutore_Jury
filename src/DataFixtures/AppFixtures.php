@@ -365,7 +365,7 @@ class AppFixtures extends Fixture
         $noteAnnee = new NoteAnnee();
         $noteAnnee->setEtudiant($etudiant);
         $noteAnnee->setAnnee($annee);
-        $noteAnnee->setNeutralisNoteMini(false);
+        $noteAnnee->setNeutraliseNoteMini(false);
         $noteAnnee->setRemarque('');
         $manager->persist($noteAnnee);
 
@@ -380,7 +380,7 @@ class AppFixtures extends Fixture
         $noteGroupe = new NoteGroupe();
         $noteGroupe->setEtudiant($etudiant);
         $noteGroupe->setGroupe($groupe);
-        $noteGroupe->setNeutralisNoteMini(false);
+        $noteGroupe->setNeutraliseNoteMini(false);
         $noteGroupe->setIsDispense(false);
         $noteGroupe->setRemarque('');
         $manager->persist($noteGroupe);
@@ -389,7 +389,7 @@ class AppFixtures extends Fixture
             $noteUe = new NoteUe();
             $noteUe->setEtudiant($etudiant);
             $noteUe->setUe($ue);
-            $noteUe->setNeutralisNoteMini(false);
+            $noteUe->setNeutraliseNoteMini(false);
             $noteUe->setIsDispense(false);
             $noteUe->setRemarque('');
             $manager->persist($noteUe);

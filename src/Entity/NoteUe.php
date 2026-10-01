@@ -18,7 +18,7 @@ class NoteUe
     private ?float $note = null;
 
     #[ORM\Column]
-    private ?bool $neutralisNoteMini = null;
+    private ?bool $neutraliseNoteMini = null;
 
     #[ORM\Column(nullable: true)]
     private ?float $pointsJury = null;
@@ -54,14 +54,14 @@ class NoteUe
         return $this;
     }
 
-    public function isNeutralisNoteMini(): ?bool
+    public function isNeutraliseNoteMini(): ?bool
     {
-        return $this->neutralisNoteMini;
+        return $this->neutraliseNoteMini;
     }
 
-    public function setNeutralisNoteMini(bool $neutralisNoteMini): static
+    public function setNeutraliseNoteMini(bool $neutraliseNoteMini): static
     {
-        $this->neutralisNoteMini = $neutralisNoteMini;
+        $this->neutraliseNoteMini = $neutraliseNoteMini;
 
         return $this;
     }
