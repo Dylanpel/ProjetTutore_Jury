@@ -1,0 +1,43 @@
+/* #login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+} */
+
+:root {
+    --bs-primary: #F00340;
+}
+
+.btn-primary {
+    --bs-btn-bg: white;
+    --bs-btn-border-color: #F00340;
+    --bs-btn-hover-bg: #c8012f;
+    --bs-btn-hover-border-color: #c8012f;
+    --bs-btn-active-bg: #a3002a;
+    --bs-btn-active-border-color: #a3002a;
+}
+
+.btn {
+    color: #F00340;
+}
+
+.login-form {
+    padding: 55px;
+}
+
+.form-control:focus {
+    border-color: #F00340;
+    box-shadow: 0 0 0 0.25rem rgba(240, 3, 64, 0.25);
+}
+
+.form-check-input:focus {
+    color: #F00340;
+    box-shadow: 0 0 0 0.25rem rgba(240, 3, 64, 0.25);
+}
+
+.form-check-input:checked {
+    background-color: #F00340;
+    border-color: #F00340;
+}

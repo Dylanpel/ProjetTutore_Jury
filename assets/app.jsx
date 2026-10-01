@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/app.css';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
@@ -8,5 +9,3 @@ if(loginRoot) {
     const props = JSON.parse(loginRoot.dataset.props);
     createRoot(loginRoot).render(<LoginForm{...props} />);
 }
-
-console.log('app.js chargé avec Webpack Encore 🎉');
