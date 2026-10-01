@@ -25,7 +25,7 @@ class NoteEpreuveType extends AbstractType
                 'class' => Etudiant::class,
                 'choice_label' => 'id',
             ])
-            ->add('eprueve', EntityType::class, [
+            ->add('epreuve', EntityType::class, [
                 'class' => Epreuve::class,
                 'choice_label' => 'id',
             ])

@@ -45,7 +45,7 @@ class Epreuve
     /**
      * @var Collection<int, NoteEpreuve>
      */
-    #[ORM\OneToMany(targetEntity: NoteEpreuve::class, mappedBy: 'eprueve')]
+    #[ORM\OneToMany(targetEntity: NoteEpreuve::class, mappedBy: 'epreuve')]
     private Collection $noteEpreuves;
 
     public function __construct()
@@ -166,7 +166,7 @@ class Epreuve
     {
         if (!$this->noteEpreuves->contains($noteEpreufe)) {
             $this->noteEpreuves->add($noteEpreufe);
-            $noteEpreufe->setEprueve($this);
+            $noteEpreufe->setEpreuve($this);
         }
 
         return $this;
@@ -176,8 +176,8 @@ class Epreuve
     {
         if ($this->noteEpreuves->removeElement($noteEpreufe)) {
             // set the owning side to null (unless already changed)
-            if ($noteEpreufe->getEprueve() === $this) {
-                $noteEpreufe->setEprueve(null);
+            if ($noteEpreufe->getEpreuve() === $this) {
+                $noteEpreufe->setEpreuve(null);
             }
         }
 
