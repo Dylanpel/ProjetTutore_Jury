@@ -22,7 +22,7 @@ final class UserController extends AbstractController
     #[Route(name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository, UserPermissionChecker $userPermission): Response
     {
-        
+
         $connectedUser = $this->getUser();
 
         $users = array_filter(
@@ -30,8 +30,13 @@ final class UserController extends AbstractController
             fn (User $user) => $userPermission->canSee($connectedUser, $user)
         );
 
+        $userData = [];
+        foreach ($users as $data) {
+            $userData[] = ["id" => $data->getId(),"login" => $data->getLogin(),"roles" => $data->getRoles(),"email" => $data->getEmail(),"remarque" => $data->getRemarque()];
+        }
+
         return $this->render('user/index.html.twig', [
-            'users' => $users,
+            'userData' => $userData,
         ]);
     }
 
@@ -77,8 +82,12 @@ final class UserController extends AbstractController
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
+        $deleteToken = $this->container->get('security.csrf.token_manager')->getToken('delete' . $user->getId())->getValue();
+
+        $userData = ["id" => $user->getId(), "login" => $user->getLogin(), "roles" => $user->getRoles(), "email" => $user->getEmail(), "remarque" => $user->getRemarque(), "deleteToken" => $deleteToken];
+
         return $this->render('user/show.html.twig', [
-            'user' => $user,
+            'userData' => $userData,
         ]);
     }
 
