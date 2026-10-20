@@ -1,3 +1,12 @@
 .bg-primary {
   background-color: #F00340 !important;
 }
+
+.lien-user {
+  color:#F00340 !important;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}

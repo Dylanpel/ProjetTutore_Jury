@@ -5,6 +5,7 @@ import { createRoot } from 'react-dom/client';
 import LoginForm from './react/controllers/LoginForm';
 import UserIndex from './react/controllers/user/UserIndex';
 import UserShow from './react/controllers/user/UserShow';
+import Navbar from './react/controllers/Navbar';
 
 const loginRoot = document.getElementById('login-root');
 if(loginRoot) {
@@ -23,3 +24,7 @@ if(userShowRoot) {
     const props = JSON.parse(userShowRoot.dataset.props);
     createRoot(userShowRoot).render(<UserShow{...props} />);
 }
+
+const navbarRoot = document.getElementById("navbar-root");
+const props = JSON.parse(navbarRoot.dataset.props);
+createRoot(navbarRoot).render(<Navbar{...props} />);

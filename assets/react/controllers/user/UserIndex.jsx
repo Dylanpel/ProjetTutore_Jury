@@ -42,15 +42,15 @@ export default function UserIndex({ users }) {
                                         </td>
                                         <td>
                                             {user.roles.map(role => (
-                                                <span key={role} className="badge badge-role rounded-pill me-1">{role}</span>
+                                                <span key={role} className="badge badge-role rounded-pill  me-1">{role}</span>
                                             ))}
                                         </td>
                                         <td className="d-none d-md-table-cell">{user.email}</td>
                                         <td className="text-muted">{user.remarque || '-'}</td>
                                         <td className="text-end">
-                                            <a href={`/user/${user.id}`} className="me-2">Voir</a>
+                                            <a href={`/user/${user.id}`} className="me-2 lien-user">Voir</a>
                                             {' '}
-                                            <a href={`/user/${user.id}/edit`}>Modifier</a>
+                                            <a href={`/user/${user.id}/edit`}className="lien-user">Modifier</a>
                                         </td>
                                     </tr>
                                 ))}
