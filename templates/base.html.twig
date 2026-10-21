@@ -21,6 +21,7 @@
         {% endif %}
     </head>
     <body>
+        <div id="navbar-root" data-props="{{ { login: app.user ? app.user.getUserIdentifier() : null }|json_encode|e('html_attr') }}"></div>
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="alert alert-{{ label }}">

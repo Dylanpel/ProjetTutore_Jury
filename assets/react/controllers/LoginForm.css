@@ -11,16 +11,13 @@
 }
 
 .btn-primary {
+    --bs-btn-color: #F00340;
     --bs-btn-bg: white;
     --bs-btn-border-color: #F00340;
     --bs-btn-hover-bg: #c8012f;
     --bs-btn-hover-border-color: #c8012f;
     --bs-btn-active-bg: #a3002a;
     --bs-btn-active-border-color: #a3002a;
-}
-
-.btn {
-    color: #F00340;
 }
 
 .login-form {

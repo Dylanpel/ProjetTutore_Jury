@@ -22,7 +22,7 @@ final class UserController extends AbstractController
     #[Route(name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository, UserPermissionChecker $userPermission): Response
     {
-        
+
         $connectedUser = $this->getUser();
 
         $users = array_filter(
@@ -30,8 +30,13 @@ final class UserController extends AbstractController
             fn (User $user) => $userPermission->canSee($connectedUser, $user)
         );
 
+        $userData = [];
+        foreach ($users as $data) {
+            $userData[] = ["id" => $data->getId(),"login" => $data->getLogin(),"roles" => $data->getRoles(),"email" => $data->getEmail(),"remarque" => $data->getRemarque()];
+        }
+
         return $this->render('user/index.html.twig', [
-            'users' => $users,
+            'userData' => $userData,
         ]);
     }
 
@@ -39,46 +44,47 @@ final class UserController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, UserPermissionChecker $userPermission, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
         $connectedUser = $this->getUser();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            if (!$userPermission->canManage($connectedUser, $user)) {
-                $this->addFlash('error', "Vous ne pouvez pas créer d'utilisateurs avec ce rôle.");
-
+        if($request->isMethod('POST')){
+             if(!$this->isCsrfTokenValid('user_form', $request->request->get('_token'))){
+                $this->addFlash('error', "Token invalide");
+                return $this->redirectToRoute('app_user_index');
+            }
+            $user->setLogin($request->request->get('login'));
+            $user->setEmail($request->request->get('email'));
+            $user->setRemarque($request->request->get('remarque'));
+            $user->setRoles($request->request->all('roles'));
+            
+            if(!$userPermission->canManage($connectedUser, $user)){
+                $this->addFlash('error',"Vous ne pouvez pas créer d'utilsateur avec ce rôle.");
                 return $this->redirectToRoute('app_user_index');
             }
 
-            $plainPassword = $form->get('password')->getData();
-            if (!$plainPassword) {
-                $form->get('password')->addError(new FormError('Le mot de passe est obligatoire.'));
-
-                return $this->render('user/new.html.twig', [
-                    'user' => $user,
-                    'form' => $form,
-                ]);
-            }
-            $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
-
+            $hashedPassword = $passwordHasher->hashPassword($user, $request->request->get('password'));
+            $user->setPassword($hashedPassword);
+            
             $entityManager->persist($user);
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_index');
         }
 
+        $tokenCsrf = $this->container->get('security.csrf.token_manager')->getToken('user_form')->getValue();
+
         return $this->render('user/new.html.twig', [
-            'user' => $user,
-            'form' => $form,
+            "csrf" => $tokenCsrf
         ]);
     }
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
+        $deleteToken = $this->container->get('security.csrf.token_manager')->getToken('delete' . $user->getId())->getValue();
+
+        $userData = ["id" => $user->getId(), "login" => $user->getLogin(), "roles" => $user->getRoles(), "email" => $user->getEmail(), "remarque" => $user->getRemarque(), "deleteToken" => $deleteToken];
+
         return $this->render('user/show.html.twig', [
-            'user' => $user,
+            'userData' => $userData,
         ]);
     }
 
@@ -86,7 +92,6 @@ final class UserController extends AbstractController
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager, UserPermissionChecker $userPermission, UserPasswordHasherInterface $passwordHasher): Response
     {
         $connectedUser = $this->getUser();
-
         
         if (!$userPermission->canManage($connectedUser, $user)) {
             $this->addFlash('error', "Vous ne pouvez pas modifier ce profil !");
@@ -94,30 +99,38 @@ final class UserController extends AbstractController
             return $this->redirectToRoute('app_user_index');
         }
 
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+        if($request->isMethod('POST')) {
+            if(!$this->isCsrfTokenValid('user_form', $request->request->get('_token'))){
+                $this->addFlash('error', "Token invalide");
+                return $this->redirectToRoute('app_user_index');
+            }
+            $user->setLogin($request->request->get('login'));
+            $user->setEmail($request->request->get('email'));
+            $user->setRemarque($request->request->get('remarque'));
+            $user->setRoles($request->request->all('roles'));
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            if (!$userPermission->canManage($connectedUser, $user)) {
-                $this->addFlash('error', "Vous ne pouvez pas attribuer ce rôle !");
-
+            if(!$userPermission->canManage($connectedUser, $user)){
+                $this->addFlash('error',"Vous ne pouvez pas attribuer ce rôle à l'utilisateur.");
                 return $this->redirectToRoute('app_user_index');
             }
 
-            $plainPassword = $form->get('password')->getData();
-            if ($plainPassword) {
-                $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
+            if(!empty($request->request->get('password'))) {
+                 $hashedPassword = $passwordHasher->hashPassword($user, $request->request->get('password'));
+                $user->setPassword($hashedPassword);
             }
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_index');
         }
 
+        $tokenCsrf = $this->container->get('security.csrf.token_manager')->getToken('user_form')->getValue();
+
+        $userData = ["id" => $user->getId(), "login" => $user->getLogin(), "roles" => $user->getRoles(), "email" => $user->getEmail(), "remarque" => $user->getRemarque()];
+
         return $this->render('user/edit.html.twig', [
-            'user' => $user,
-            'form' => $form,
+            "userData" => $userData,
+            "csrf" => $tokenCsrf
         ]);
     }
 
