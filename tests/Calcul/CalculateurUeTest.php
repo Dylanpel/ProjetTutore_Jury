@@ -2,7 +2,7 @@
 
 namespace App\Tests\Calcul;
 
-use App\Calcul\CalculateurNotes;
+use App\Calcul\CalculateurUe;
 use App\Entity\Epreuve;
 use App\Entity\Etudiant;
 use App\Entity\NoteEpreuve;
@@ -11,7 +11,7 @@ use App\Entity\Ue;
 use App\Repository\NoteEpreuveRepository;
 use PHPUnit\Framework\TestCase;
 
-class CalculateurNotesTest extends TestCase
+class CalculateurUeTest extends TestCase
 {
     public function testMoyennePondereeDeDeuxEpreuves(): void
     {
@@ -28,7 +28,7 @@ class CalculateurNotesTest extends TestCase
         ];
 
         //ACT
-        $calculateur = new CalculateurNotes(
+        $calculateur = new CalculateurUe(
             $this->creerRepository($notesEpreuves),
         );
 
@@ -55,7 +55,7 @@ class CalculateurNotesTest extends TestCase
         ];
 
         //ACT
-        $calculateur = new CalculateurNotes(
+        $calculateur = new CalculateurUe(
             $this->creerRepository($notesEpreuves),
         );
 
@@ -83,7 +83,7 @@ class CalculateurNotesTest extends TestCase
         ];
 
         //ACT
-        $calculateur = new CalculateurNotes(
+        $calculateur = new CalculateurUe(
             $this->creerRepository($notesEpreuves),
         );
 
@@ -111,7 +111,7 @@ class CalculateurNotesTest extends TestCase
         ];
 
         //ACT
-        $calculateur = new CalculateurNotes(
+        $calculateur = new CalculateurUe(
             $this->creerRepository($notesEpreuves),
         );
 
@@ -139,7 +139,7 @@ class CalculateurNotesTest extends TestCase
         ];
 
         //ACT
-        $calculateur = new CalculateurNotes(
+        $calculateur = new CalculateurUe(
             $this->creerRepository($notesEpreuves),
         );
 

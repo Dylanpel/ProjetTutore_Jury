@@ -6,13 +6,11 @@ use App\Entity\NoteUe;
 use App\Entity\NoteEpreuve;
 use App\Repository\NoteEpreuveRepository;
 
-class CalculateurNotes
+class CalculateurUe
 {
-
     public function __construct(
-        private readonly NoteEpreuveRepository $noteEpreuveRepository, 
-    )
-    {
+        private readonly NoteEpreuveRepository $noteEpreuveRepository,
+    ) {
     }
 
     /**
@@ -80,7 +78,7 @@ class CalculateurNotes
     /**
      * @return NoteEpreuve[]
      */
-    private function getNotesEpreuves(NoteUe $noteUe) : array
+    private function getNotesEpreuves(NoteUe $noteUe): array
     {
         return $this->noteEpreuveRepository->findByEtudiantAndUe(
             $noteUe->getEtudiant(),
