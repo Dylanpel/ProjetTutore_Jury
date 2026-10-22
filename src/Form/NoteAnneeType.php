@@ -16,7 +16,7 @@ class NoteAnneeType extends AbstractType
     {
         $builder
             ->add('note')
-            ->add('neutralisNoteMini')
+            ->add('neutraliseNoteMini')
             ->add('pointsJury')
             ->add('bonus')
             ->add('remarque')

@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Entity\Etudiant;
+use App\Entity\Groupe;
 use App\Entity\NoteGroupe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,28 +18,42 @@ class NoteGroupeRepository extends ServiceEntityRepository
         parent::__construct($registry, NoteGroupe::class);
     }
 
-//    /**
-//     * @return NoteGroupe[] Returns an array of NoteGroupe objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('n')
-//            ->andWhere('n.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('n.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+    * @return NoteGroupe[]
+    */
+    public function findByEtudiantAndParent(Etudiant $etudiant, Groupe $parent): array
+    {
+        return $this->createQueryBuilder('ng')
+            ->join('ng.groupe', 'g')
+            ->andWhere('ng.etudiant = :etudiant')
+            ->andWhere('g.parent = :parent')
+            ->setParameter('etudiant', $etudiant)
+            ->setParameter('parent', $parent)
+            ->getQuery()
+            ->getResult();
+    }
+    //    /**
+    //     * @return NoteGroupe[] Returns an array of NoteGroupe objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('n')
+    //            ->andWhere('n.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('n.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-//    public function findOneBySomeField($value): ?NoteGroupe
-//    {
-//        return $this->createQueryBuilder('n')
-//            ->andWhere('n.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?NoteGroupe
+    //    {
+    //        return $this->createQueryBuilder('n')
+    //            ->andWhere('n.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }
