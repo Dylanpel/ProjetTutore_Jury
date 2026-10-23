@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Entity\Etudiant;
+use App\Entity\Groupe;
 use App\Entity\NoteUe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,6 +18,21 @@ class NoteUeRepository extends ServiceEntityRepository
         parent::__construct($registry, NoteUe::class);
     }
 
+    /**
+     * @return NoteUe[]
+     */
+    public function findByEtudiantAndGroupe(Etudiant $etudiant, Groupe $groupe): array
+    {
+        return $this->createQueryBuilder('nu')
+            ->join('nu.ue', 'u')
+            ->join('u.groupeUes', 'gu')
+            ->andWhere('gu.groupe = :groupe')
+            ->andWhere('nu.etudiant = :etudiant')
+            ->setParameter('etudiant', $etudiant)
+            ->setParameter('groupe', $groupe)
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return NoteUe[] Returns an array of NoteUe objects
 //     */
