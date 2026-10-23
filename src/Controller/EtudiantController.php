@@ -17,8 +17,15 @@ final class EtudiantController extends AbstractController
     #[Route(name: 'app_etudiant_index', methods: ['GET'])]
     public function index(EtudiantRepository $etudiantRepository): Response
     {
+        $etudiants = $etudiantRepository->findAll();
+
+        $etudiantData = [];
+        foreach($etudiants as $info) {
+            $etudiantData[] = ["id"=>$info->getId(), "numero"=>$info->getNumero(), "nom"=>$info->getNom(), "prenom"=>$info->getPrenom(), "remarque"=>$info->getRemarque()];
+        }
+
         return $this->render('etudiant/index.html.twig', [
-            'etudiants' => $etudiantRepository->findAll(),
+            "etudiantData" => $etudiantData
         ]);
     }
 
@@ -45,8 +52,12 @@ final class EtudiantController extends AbstractController
     #[Route('/{id}', name: 'app_etudiant_show', methods: ['GET'])]
     public function show(Etudiant $etudiant): Response
     {
+        $deleteToken = $this->container->get('security.csrf.token_manager')->getToken('delete' . $etudiant->getId())->getValue();
+
+        $etudiantData = ["id"=>$etudiant->getId(), "numero"=>$etudiant->getNumero(), "nom"=>$etudiant->getNom(), "prenom"=>$etudiant->getPrenom(), "remarque"=>$etudiant->getRemarque(), "deleteToken"=>$deleteToken];
+
         return $this->render('etudiant/show.html.twig', [
-            'etudiant' => $etudiant,
+            'etudiantData' => $etudiantData
         ]);
     }
 
