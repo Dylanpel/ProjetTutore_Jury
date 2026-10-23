@@ -282,8 +282,13 @@ class AppFixtures extends Fixture
 
         // ---------------------------------------------------------------
         // Inscription pedagogique d'Alice : tout va bien, notes correctes
+        // Option choisie dans Ouverture : Tennis
         // ---------------------------------------------------------------
-        $this->inscrire($manager, $alice, $annee, $divisionS1, $groupeS1, [$ueAlgo, $ueAlgebre, $ueAnglais]);
+        $this->inscrire(
+            $manager, $alice, $annee, $divisionS1,
+            [$groupeS1, $groupeOuverture],
+            [$ueAlgo, $ueAlgebre, $ueAnglais, $ueTennis],
+        );
 
         $noteEpreuveAliceCC = new NoteEpreuve();
         $noteEpreuveAliceCC->setEtudiant($alice);
@@ -314,8 +319,13 @@ class AppFixtures extends Fixture
 
         // ---------------------------------------------------------------
         // Inscription pedagogique de Bob : un exemple d'absence injustifiee
+        // Option choisie dans Ouverture : Droit des entreprises
         // ---------------------------------------------------------------
-        $this->inscrire($manager, $bob, $annee, $divisionS1, $groupeS1, [$ueAlgo, $ueAlgebre, $ueAnglais]);
+        $this->inscrire(
+            $manager, $bob, $annee, $divisionS1,
+            [$groupeS1, $groupeOuverture],
+            [$ueAlgo, $ueAlgebre, $ueAnglais, $ueDroit],
+        );
 
         $noteEpreuveBobCC = new NoteEpreuve();
         $noteEpreuveBobCC->setEtudiant($bob);
@@ -352,6 +362,7 @@ class AppFixtures extends Fixture
      * Cree les lignes de notes vides (annee, division, groupe, UEs) pour un
      * etudiant qui s'inscrit a une annee : c'est l'inscription pedagogique.
      *
+     * @param array<int, Groupe> $groupes groupes suivis, sous-groupes compris
      * @param array<int, Ue> $ues
      */
     private function inscrire(
@@ -359,7 +370,7 @@ class AppFixtures extends Fixture
         Etudiant $etudiant,
         Annee $annee,
         Division $division,
-        Groupe $groupe,
+        array $groupes,
         array $ues,
     ): void {
         $noteAnnee = new NoteAnnee();
@@ -377,13 +388,15 @@ class AppFixtures extends Fixture
         $noteDivision->setRemarque('');
         $manager->persist($noteDivision);
 
-        $noteGroupe = new NoteGroupe();
-        $noteGroupe->setEtudiant($etudiant);
-        $noteGroupe->setGroupe($groupe);
-        $noteGroupe->setNeutraliseNoteMini(false);
-        $noteGroupe->setIsDispense(false);
-        $noteGroupe->setRemarque('');
-        $manager->persist($noteGroupe);
+        foreach ($groupes as $groupe) {
+            $noteGroupe = new NoteGroupe();
+            $noteGroupe->setEtudiant($etudiant);
+            $noteGroupe->setGroupe($groupe);
+            $noteGroupe->setNeutraliseNoteMini(false);
+            $noteGroupe->setIsDispense(false);
+            $noteGroupe->setRemarque('');
+            $manager->persist($noteGroupe);
+        }
 
         foreach ($ues as $ue) {
             $noteUe = new NoteUe();
