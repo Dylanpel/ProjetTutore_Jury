@@ -178,7 +178,7 @@ class AppFixtures extends Fixture
         $manager->persist($ueDroit);
 
         // ---------------------------------------------------------------
-        // Epreuves (uniquement pour Algo et Anglais, pour rester minimal)
+        // Epreuves : au moins une par UE, pour que les moyennes soient calculables
         // ---------------------------------------------------------------
         $epreuveAlgoCC = new Epreuve();
         $epreuveAlgoCC->setNumero(1);
@@ -206,6 +206,33 @@ class AppFixtures extends Fixture
         $epreuveAnglaisOral->setNature($natureOral);
         $epreuveAnglaisOral->setRemarque('');
         $manager->persist($epreuveAnglaisOral);
+
+        $epreuveAlgebreExamen = new Epreuve();
+        $epreuveAlgebreExamen->setNumero(1);
+        $epreuveAlgebreExamen->setNom('Examen final');
+        $epreuveAlgebreExamen->setCoefficient(1.0);
+        $epreuveAlgebreExamen->setUe($ueAlgebre);
+        $epreuveAlgebreExamen->setNature($natureEcrit);
+        $epreuveAlgebreExamen->setRemarque('');
+        $manager->persist($epreuveAlgebreExamen);
+
+        $epreuveTennisPratique = new Epreuve();
+        $epreuveTennisPratique->setNumero(1);
+        $epreuveTennisPratique->setNom('Pratique');
+        $epreuveTennisPratique->setCoefficient(1.0);
+        $epreuveTennisPratique->setUe($ueTennis);
+        $epreuveTennisPratique->setNature($natureOral);
+        $epreuveTennisPratique->setRemarque('');
+        $manager->persist($epreuveTennisPratique);
+
+        $epreuveDroitExamen = new Epreuve();
+        $epreuveDroitExamen->setNumero(1);
+        $epreuveDroitExamen->setNom('Examen final');
+        $epreuveDroitExamen->setCoefficient(1.0);
+        $epreuveDroitExamen->setUe($ueDroit);
+        $epreuveDroitExamen->setNature($natureEcrit);
+        $epreuveDroitExamen->setRemarque('');
+        $manager->persist($epreuveDroitExamen);
 
         // ---------------------------------------------------------------
         // Groupes : S1 (obligatoire) contient Algo, Algebre, Anglais
@@ -282,8 +309,14 @@ class AppFixtures extends Fixture
 
         // ---------------------------------------------------------------
         // Inscription pedagogique d'Alice : tout va bien, notes correctes
+        // Option choisie dans Ouverture : Tennis
+        // Moyenne attendue du S1 : 247/18 = 13.72 (complet)
         // ---------------------------------------------------------------
-        $this->inscrire($manager, $alice, $annee, $divisionS1, $groupeS1, [$ueAlgo, $ueAlgebre, $ueAnglais]);
+        $this->inscrire(
+            $manager, $alice, $annee, $divisionS1,
+            [$groupeS1, $groupeOuverture],
+            [$ueAlgo, $ueAlgebre, $ueAnglais, $ueTennis],
+        );
 
         $noteEpreuveAliceCC = new NoteEpreuve();
         $noteEpreuveAliceCC->setEtudiant($alice);
@@ -312,10 +345,34 @@ class AppFixtures extends Fixture
         $noteEpreuveAliceOral->setRemarque('');
         $manager->persist($noteEpreuveAliceOral);
 
+        $noteEpreuveAliceAlgebre = new NoteEpreuve();
+        $noteEpreuveAliceAlgebre->setEtudiant($alice);
+        $noteEpreuveAliceAlgebre->setEpreuve($epreuveAlgebreExamen);
+        $noteEpreuveAliceAlgebre->setNote(13.0);
+        $noteEpreuveAliceAlgebre->setNeutraliseNoteMini(false);
+        $noteEpreuveAliceAlgebre->setIsDispense(false);
+        $noteEpreuveAliceAlgebre->setRemarque('');
+        $manager->persist($noteEpreuveAliceAlgebre);
+
+        $noteEpreuveAliceTennis = new NoteEpreuve();
+        $noteEpreuveAliceTennis->setEtudiant($alice);
+        $noteEpreuveAliceTennis->setEpreuve($epreuveTennisPratique);
+        $noteEpreuveAliceTennis->setNote(15.0);
+        $noteEpreuveAliceTennis->setNeutraliseNoteMini(false);
+        $noteEpreuveAliceTennis->setIsDispense(false);
+        $noteEpreuveAliceTennis->setRemarque('');
+        $manager->persist($noteEpreuveAliceTennis);
+
         // ---------------------------------------------------------------
         // Inscription pedagogique de Bob : un exemple d'absence injustifiee
+        // Option choisie dans Ouverture : Droit des entreprises
+        // Toutes ses notes sont saisies, seule l'absence rend le S1 incomplet
         // ---------------------------------------------------------------
-        $this->inscrire($manager, $bob, $annee, $divisionS1, $groupeS1, [$ueAlgo, $ueAlgebre, $ueAnglais]);
+        $this->inscrire(
+            $manager, $bob, $annee, $divisionS1,
+            [$groupeS1, $groupeOuverture],
+            [$ueAlgo, $ueAlgebre, $ueAnglais, $ueDroit],
+        );
 
         $noteEpreuveBobCC = new NoteEpreuve();
         $noteEpreuveBobCC->setEtudiant($bob);
@@ -345,6 +402,24 @@ class AppFixtures extends Fixture
         $noteEpreuveBobOral->setRemarque('');
         $manager->persist($noteEpreuveBobOral);
 
+        $noteEpreuveBobAlgebre = new NoteEpreuve();
+        $noteEpreuveBobAlgebre->setEtudiant($bob);
+        $noteEpreuveBobAlgebre->setEpreuve($epreuveAlgebreExamen);
+        $noteEpreuveBobAlgebre->setNote(10.0);
+        $noteEpreuveBobAlgebre->setNeutraliseNoteMini(false);
+        $noteEpreuveBobAlgebre->setIsDispense(false);
+        $noteEpreuveBobAlgebre->setRemarque('');
+        $manager->persist($noteEpreuveBobAlgebre);
+
+        $noteEpreuveBobDroit = new NoteEpreuve();
+        $noteEpreuveBobDroit->setEtudiant($bob);
+        $noteEpreuveBobDroit->setEpreuve($epreuveDroitExamen);
+        $noteEpreuveBobDroit->setNote(12.0);
+        $noteEpreuveBobDroit->setNeutraliseNoteMini(false);
+        $noteEpreuveBobDroit->setIsDispense(false);
+        $noteEpreuveBobDroit->setRemarque('');
+        $manager->persist($noteEpreuveBobDroit);
+
         $manager->flush();
     }
 
@@ -352,6 +427,7 @@ class AppFixtures extends Fixture
      * Cree les lignes de notes vides (annee, division, groupe, UEs) pour un
      * etudiant qui s'inscrit a une annee : c'est l'inscription pedagogique.
      *
+     * @param array<int, Groupe> $groupes groupes suivis, sous-groupes compris
      * @param array<int, Ue> $ues
      */
     private function inscrire(
@@ -359,7 +435,7 @@ class AppFixtures extends Fixture
         Etudiant $etudiant,
         Annee $annee,
         Division $division,
-        Groupe $groupe,
+        array $groupes,
         array $ues,
     ): void {
         $noteAnnee = new NoteAnnee();
@@ -377,13 +453,15 @@ class AppFixtures extends Fixture
         $noteDivision->setRemarque('');
         $manager->persist($noteDivision);
 
-        $noteGroupe = new NoteGroupe();
-        $noteGroupe->setEtudiant($etudiant);
-        $noteGroupe->setGroupe($groupe);
-        $noteGroupe->setNeutraliseNoteMini(false);
-        $noteGroupe->setIsDispense(false);
-        $noteGroupe->setRemarque('');
-        $manager->persist($noteGroupe);
+        foreach ($groupes as $groupe) {
+            $noteGroupe = new NoteGroupe();
+            $noteGroupe->setEtudiant($etudiant);
+            $noteGroupe->setGroupe($groupe);
+            $noteGroupe->setNeutraliseNoteMini(false);
+            $noteGroupe->setIsDispense(false);
+            $noteGroupe->setRemarque('');
+            $manager->persist($noteGroupe);
+        }
 
         foreach ($ues as $ue) {
             $noteUe = new NoteUe();
