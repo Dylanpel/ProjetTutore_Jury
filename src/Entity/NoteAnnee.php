@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: NoteAnneeRepository::class)]
+#[ORM\UniqueConstraint(name: 'etudiant_annee_unique', fields: ['etudiant', 'annee'])]
 class NoteAnnee
 {
     #[ORM\Id]

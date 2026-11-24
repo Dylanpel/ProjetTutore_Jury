@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ParcourRepository::class)]
+#[ORM\UniqueConstraint(name: 'nom_mention_unique', fields: ['nom', 'mention'])]
 class Parcour
 {
     #[ORM\Id]
@@ -22,7 +23,7 @@ class Parcour
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $nomCourt = null;
 
-    #[ORM\Column]
+    #[ORM\Column(unique: true)]
     private ?int $rang = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]

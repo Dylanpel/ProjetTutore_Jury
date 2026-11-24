@@ -16,13 +16,13 @@ class Diplome
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 100, unique: true)]
     private ?string $nom = null;
 
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $nom_court = null;
 
-    #[ORM\Column]
+    #[ORM\Column(unique: true)]
     private ?int $rang = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
