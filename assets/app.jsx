@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/app.css';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import LoginForm from './react/controllers/LoginForm';
 import UserIndex from './react/controllers/user/UserIndex';
@@ -9,43 +8,26 @@ import Navbar from './react/controllers/Navbar';
 import UserForm from './react/controllers/user/UserForm';
 import EtudiantIndex from './react/controllers/Etudiant/EtudiantIndex';
 import EtudiantShow from './react/controllers/Etudiant/EtudiantShow';
+import EtudiantForm from './react/controllers/Etudiant/EtudiantForm';
 
-const loginRoot = document.getElementById('login-root');
-if(loginRoot) {
-    const props = JSON.parse(loginRoot.dataset.props);
-    createRoot(loginRoot).render(<LoginForm{...props} />);
+const composants = {
+    'navbar-root': Navbar,
+    'login-root': LoginForm,
+    'user-index-root': UserIndex,
+    'user-show-root': UserShow,
+    'user-form-root': UserForm,
+    'etudiant-index-root': EtudiantIndex,
+    'etudiant-show-root': EtudiantShow,
+    'etudiant-form-root': EtudiantForm,
 }
 
-const userIndexRoot = document.getElementById('user-index-root');
-if(userIndexRoot) {
-    const props = JSON.parse(userIndexRoot.dataset.props);
-    createRoot(userIndexRoot).render(<UserIndex{...props} />);
-}
+for(const [id, Component] of Object.entries(composants)) {
+    const element = document.getElementById(id);
 
-const userShowRoot = document.getElementById('user-show-root');
-if(userShowRoot) {
-    const props = JSON.parse(userShowRoot.dataset.props);
-    createRoot(userShowRoot).render(<UserShow{...props} />);
-}
+    if(!element) {
+        continue;
+    }
 
-const navbarRoot = document.getElementById("navbar-root");
-const props = JSON.parse(navbarRoot.dataset.props);
-createRoot(navbarRoot).render(<Navbar{...props} />);
-
-const userFormRoot = document.getElementById("user-form-root");
-if(userFormRoot) {
-    const props = JSON.parse(userFormRoot.dataset.props);
-    createRoot(userFormRoot).render(<UserForm{...props} />);
-}
-
-const etudiantIndexRoot = document.getElementById('etudiant-index-root');
-if(etudiantIndexRoot) {
-    const props = JSON.parse(etudiantIndexRoot.dataset.props);
-    createRoot(etudiantIndexRoot).render(<EtudiantIndex{...props} />);
-}
-
-const etudiantShowRoot = document.getElementById('etudiant-show-root');
-if(etudiantShowRoot) {
-    const props = JSON.parse(etudiantShowRoot.dataset.props);
-    createRoot(etudiantShowRoot).render(<EtudiantShow{...props} />);
+    const props = JSON.parse(element.dataset.props || '{}');
+    createRoot(element).render(<Component {...props} />);
 }
