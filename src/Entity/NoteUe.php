@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: NoteUeRepository::class)]
+#[ORM\UniqueConstraint(name: 'etudiant_ue_unique', fields: ['etudiant', 'ue'])]
 class NoteUe
 {
     #[ORM\Id]
@@ -26,7 +27,7 @@ class NoteUe
     #[ORM\Column]
     private ?bool $isDispense = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $remarque = null;
 
     #[ORM\ManyToOne(inversedBy: 'noteUes')]

@@ -4,7 +4,7 @@ export default function Navbar({ login }) {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-white">
             <div className="container-fluid">
-                <a className="navbar-brand text-dark" href="/">Bonjour le monde</a>
+                <a className="navbar-brand text-dark" href="/">Projet Jury</a>
 
                 <button
                     className="navbar-toggler"
@@ -22,6 +22,9 @@ export default function Navbar({ login }) {
                     <ul className="navbar-nav me-auto">
                         <li className="nav-item">
                             <a className="nav-link text-dark" href="/user">Utilisateurs</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link text-dark" href="/etudiant">Étudiants</a>
                         </li>
                     </ul>
 

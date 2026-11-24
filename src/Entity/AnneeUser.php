@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnneeUserRepository::class)]
+#[ORM\UniqueConstraint(name: 'user_annee_unique', fields: ['utilisateur', 'annee'])]
 class AnneeUser
 {
     #[ORM\Id]
@@ -25,6 +26,7 @@ class AnneeUser
     private ?User $utilisateur = null;
 
     #[ORM\ManyToOne(inversedBy: 'anneeUsers')]
+    #[ORM\JoinColumn(name: 'id_annee', nullable: false)]
     private ?Annee $annee = null;
 
     public function getId(): ?int
