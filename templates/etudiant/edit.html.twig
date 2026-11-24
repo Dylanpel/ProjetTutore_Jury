@@ -3,11 +3,7 @@
 {% block title %}Edit Etudiant{% endblock %}
 
 {% block body %}
-    <h1>Edit Etudiant</h1>
-
-    {{ include('etudiant/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_etudiant_index') }}">back to list</a>
-
-    {{ include('etudiant/_delete_form.html.twig') }}
+    <div
+        id="etudiant-form-root"
+        data-props="{{ { etudiant: etudiantData, token: csrf  }|json_encode|e('html_attr') }}"></div>
 {% endblock %}

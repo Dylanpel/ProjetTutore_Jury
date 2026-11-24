@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Etudiant;
-use App\Form\EtudiantType;
 use App\Repository\EtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,19 +32,27 @@ final class EtudiantController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $etudiant = new Etudiant();
-        $form = $this->createForm(EtudiantType::class, $etudiant);
-        $form->handleRequest($request);
+        
+        if($request->isMethod('POST')) {
+            if(!$this->isCsrfTokenValid('etudiant_form', $request->request->get('_token'))) {
+                $this->addFlash('error', "Token invalide");
+                return $this->redirectToRoute('app_etudiant_index');
+            }
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            $etudiant->setNom($request->request->get('nom'));
+            $etudiant->setPrenom($request->request->get('prenom'));
+            $etudiant->setNumero($request->request->get('numero'));
+            $etudiant->setRemarque($request->request->get('remarque'));
+
             $entityManager->persist($etudiant);
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_etudiant_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_etudiant_index');
         }
 
+        $tokenCsrf = $this->container->get('security.csrf.token_manager')->getToken('etudiant_form')->getValue();
+
         return $this->render('etudiant/new.html.twig', [
-            'etudiant' => $etudiant,
-            'form' => $form,
+            'csrf' => $tokenCsrf
         ]);
     }
 
@@ -64,18 +71,28 @@ final class EtudiantController extends AbstractController
     #[Route('/{id}/edit', name: 'app_etudiant_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Etudiant $etudiant, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(EtudiantType::class, $etudiant);
-        $form->handleRequest($request);
+        if($request->isMethod('POST')) {
+            if(!$this->isCsrfTokenValid('etudiant_form', $request->request->get('_token'))) {
+                $this->addFlash('error', "Token invalide");
+                return $this->redirectToRoute('app_etudiant_index');
+            }
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            $etudiant->setNom($request->request->get('nom'));
+            $etudiant->setPrenom($request->request->get('prenom'));
+            $etudiant->setNumero($request->request->get('numero'));
+            $etudiant->setRemarque($request->request->get('remarque'));
+
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_etudiant_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_etudiant_index');
         }
 
+        $tokenCsrf = $this->container->get('security.csrf.token_manager')->getToken('etudiant_form')->getValue();
+
+         $etudiantData = ["id" => $etudiant->getId(), "nom" => $etudiant->getNom(), "prenom" => $etudiant->getPrenom(), "numero" => $etudiant->getNumero(), "remarque" => $etudiant->getRemarque()];
+
         return $this->render('etudiant/edit.html.twig', [
-            'etudiant' => $etudiant,
-            'form' => $form,
+            'etudiantData' => $etudiantData, 
+            'csrf' => $tokenCsrf
         ]);
     }
 
